@@ -32,8 +32,8 @@ app.post('/predictLoanStatus',verifyAPIKey, (req, res) => {
   } = req.body;
 
   // Call the Python script with input data
-  const pythonProcess = spawn('C:\\Python311\\python.exe', [
-    'C:\\Users\\Hamza Elhaiki\\Desktop\\BackEnd\\prediction_loan.py',
+  const pythonProcess = spawn('python', [
+    './prediction_loan.py',
     ApplicantIncome,
     Gender,
     Married,
