@@ -4,10 +4,18 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use(bodyParser.json()); // Use body-parser middleware
+const API_KEY = 'LPIBD';
+const verifyAPIKey = (req, res, next) => {
+  const apiKey = req.headers['api-key'];
+  if (!apiKey || apiKey !== API_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+};
 
+app.use(bodyParser.json()); // Use body-parser middleware
 // Define a route to handle loan prediction
-app.post('/predictLoanStatus', (req, res) => {
+app.post('/predictLoanStatus',verifyAPIKey, (req, res) => {
   // Get input data from the request
   const { 
     ApplicantIncome,
@@ -60,7 +68,6 @@ app.post('/predictLoanStatus', (req, res) => {
   });
 });
 
-// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

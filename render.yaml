@@ -1,0 +1,5 @@
+services:
+  - name: Backend_prediction_model
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
